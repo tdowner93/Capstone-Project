@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -50,12 +49,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Golf_simulator.urls'
+ROOT_URLCONF = 'Golf_Simulator.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'golf/templates'],
+        'DIRS': [BASE_DIR / 'golf/templates/golf'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Golf_simulator.wsgi.application'
+WSGI_APPLICATION = 'Golf_Simulator.wsgi.application'
 
 
 # Database
@@ -116,11 +115,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-import os
-STATIC_URL = '/static/'
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+STATIC_URL = '/static/'  # URL prefix for static files
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static/golf'),  # Ensure this matches your actual static directory
+    BASE_DIR / "static",  # This should point to your 'static' folder at project root
 ]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
