@@ -1,40 +1,16 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Golf Simulator</title>
-    <link rel="stylesheet" href="{% static 'golf/css/styles.css' %}">
-</head>
-<body>
-    <h1>Golf Simulator</h1>
-    <form id="shotForm">
-        {% csrf_token %}
-        <label for="club">Select Club:</label>
-        <select id="club" name="club">
-            <option value="Driver">Driver</option>
-            <option value="Iron">Iron</option>
-            <option value="Putter">Putter</option>
-        </select>
-        <br>
-        <label for="power">Power (1-100%):</label>
-        <input type="number" id="power" name="power" min="1" max="100" value="50">
-        <br>
-        <button type="button" onclick="simulateShot()">Hit Shot</button>
-    </form>
-    <h2 id="result"></h2>
+{% extends "base.html" %}
+{% block title %}Welcome to Golf Shot Predictor{% endblock %}
 
-    <script>
-        function simulateShot() {
-            let formData = new FormData(document.getElementById('shotForm'));
-            fetch('/simulate_shot/', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('result').innerText = "Shot Distance: " + data.distance + " yards";
-            });
-        }
-    </script>
-</body>
-</html>
+{% block content %}
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Golf Shot Predictor</h1>
+            <p>Predict your golf shots with real-time data and smart algorithms.</p>
+            <a href="{% url 'shot_predictor' %}" class="cta-button">Start Predicting</a>
+        </div>
+    </header>
+
+    <footer>
+        <p>&copy; 2025 Golf Shot Predictor. All rights reserved.</p>
+    </footer>
+{% endblock %}

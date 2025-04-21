@@ -1,53 +1,53 @@
+from django.shortcuts import render
 import random
 from django.shortcuts import render
 from django.http import JsonResponse
 
-
 def home(request):
-    return render(request, 'golf/home.html')
+    return render(request, 'golf/home.html')  # optional homepage
 
-def simulate_shot(request):
+def get_environment_factor(weather, slope, lie):
+    factor = 1.0
+    if weather == 'windy':
+        factor -= 0.05
+    elif weather == 'rainy':
+        factor -= 0.10
+
+    if slope == 'uphill':
+        factor -= 0.10
+    elif slope == 'downhill':
+        factor += 0.10
+
+    if lie == 'rough':
+        factor -= 0.07
+    elif lie == 'sand':
+        factor -= 0.15
+
+    return factor
+
+def shot_predictor(request):
     if request.method == 'POST':
-        club = request.POST.get('club')
-        power = int(request.POST.get('power', 50))  # Default power is 50%
-        
-        # Basic shot distance calculation
-        club_distances = {
-            'Driver': 230,
-            'Iron': 150,
-            'Putter': 20
+        name = request.POST['name']
+        club = request.POST['club']
+        distance = float(request.POST['distance'])
+        weather = request.POST['weather']
+        slope = request.POST['slope']
+        lie = request.POST['lie']
+
+        factor = get_environment_factor(weather, slope, lie)
+        adjusted_distance = round(distance * factor)
+
+        context = {
+            'name': name,
+            'club': club,
+            'distance': distance,
+            'weather': weather,
+            'slope': slope,
+            'lie': lie,
+            'adjusted_distance': adjusted_distance,
         }
-        
-        base_distance = club_distances.get(club, 100)
-        variation = random.uniform(-0.1, 0.1)  # 10% variation
-        shot_distance = base_distance * (power / 100) * (1 + variation)
-        
-        return JsonResponse({'distance': round(shot_distance, 2)})
+        return render(request, 'golf/result.html', context)
     
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+    return render(request, 'golf/form.html')
 
-def recommend_club(distance, wind_speed, rain):
-    clubs = {
-        "Driver": range(200, 300),
-        "3 Wood": range(180, 220),
-        "5 Iron": range(150, 180),
-        "7 Iron": range(130, 150),
-        "9 Iron": range(100, 130),
-        "Pitching Wedge": range(50, 100),
-        "Putter": range(0, 50),
-    }
 
-    # Adjust distance based on wind and rain
-    if wind_speed > 15:
-        distance -= 10  # Reduce distance for strong wind
-    if rain:
-        distance -= 5  # Reduce distance in rain
-
-    for club, dist_range in clubs.items():
-        if distance in dist_range:
-            return club
-    return "Unknown Club"
-
-# Example call
-club = recommend_club(distance=160, wind_speed=10, rain=False)
-print(f"Recommended Club: {club}")

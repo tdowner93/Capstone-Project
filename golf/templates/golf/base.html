@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Golf App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'golf/css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'golf/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'golf/css/shot_predictor.css' %}">
+    <link rel="stylesheet" href="{% static 'golf/css/result.css' %}">
+    <link rel="stylesheet" href="{% static  'golf/css/windy.css  %'}"
+
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shot_predictor' %}">Predict Shot</a></li>  <!-- Fixed the extra '<<' -->
+        </ul>
+    </nav>
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

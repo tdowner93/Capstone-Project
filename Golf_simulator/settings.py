@@ -121,12 +121,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = '/static/'  # URL prefix for static files
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # This should point to your 'static' folder at project root
-]
+STATICFILES_DIRS = [BASE_DIR / "static",  # This should point to your 'static' folder at project root
+                    ]
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import os
+
+OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
+

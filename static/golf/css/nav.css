@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f0f5f5;
+  }
+  
+  .navbar {
+    background-color: #004d4d;
+    padding: 15px 20px;
+  }
+  
+  .navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  .navbar li {
+    float: left;
+    margin-right: 20px;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    transition: 0.3s;
+  }
+  
+  .navbar a:hover {
+    background-color: #007d7d;
+    border-radius: 5px;
+  }
+  
+  .content {
+    padding: 30px;
+  }

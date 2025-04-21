@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Prediction Result{% endblock %}
+
+{% block content %}
+<h2>Shot Prediction Result</h2>
+
+<p><strong>{{ name }}</strong>, based on your input:</p>
+
+<ul>
+    <li><strong>Club:</strong> {{ club }}</li>
+    <li><strong>Base Distance:</strong> {{ distance }} yards</li>
+    <li><strong>Weather:</strong> {{ weather }}</li>
+    <li><strong>Slope:</strong> {{ slope }}</li>
+    <li><strong>Lie:</strong> {{ lie }}</li>
+</ul>
+
+<p>⛳️ <strong>Predicted Shot Distance:</strong>
+    <span style="font-size: 1.5em; color: green;">{{ adjusted_distance }} yards</span>
+</p>
+
+<a href="{% url 'shot_predictor' %}">🔁 Try another shot</a>
+<img src="{% static '/golf/images/arrow_windy.png' %}" alt="Windy Arrow">
+{% endblock %}

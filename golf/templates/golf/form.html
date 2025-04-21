@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Shot Predictor{% endblock %}
+
+{% block content %}
+<h2>Enter Your Shot Info</h2>
+<form method="post" action="{% url 'shot_predictor' %}">
+    {% csrf_token %}
+
+    <label>Name:
+        <input type="text" name="name" required>
+    </label>
+
+    <label>Club:
+        <input type="text" name="club" required>
+    </label>
+
+    <label>Base Distance (yards):
+        <input type="number" name="distance" required>
+    </label>
+
+    <label>Weather:
+        <select name="weather">
+            <option value="sunny">Sunny</option>
+            <option value="windy">Windy</option>
+            <option value="rainy">Rainy</option>
+        </select>
+    </label>
+
+    <label>Slope:
+        <select name="slope">
+            <option value="flat">Flat</option>
+            <option value="uphill">Uphill</option>
+            <option value="downhill">Downhill</option>
+        </select>
+    </label>
+
+    <label>Lie:
+        <select name="lie">
+            <option value="fairway">Fairway</option>
+            <option value="rough">Rough</option>
+            <option value="sand">Sand</option>
+        </select>
+    </label>
+
+    <button type="submit">Predict Shot</button>
+</form>
+{% endblock %}
