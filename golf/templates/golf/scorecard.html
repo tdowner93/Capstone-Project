@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Scorecard | Golf Simulator{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <h2>🏌️ Scorecard</h2>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <h4 class="card-title">Add New Score</h4>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row g-3">
+                {% for field in form %}
+                <div class="col-md-4">
+                    <label class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="text-danger">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-success mt-3">➕ Submit Score</button>
+        </form>
+
+        <!-- Button to reset the scorecard -->
+        <form method="post" action="{% url 'reset_scorecard' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger mt-3">❌ Start New Scorecard</button>
+        </form>
+    </div>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <h4 class="card-title">📊 Stats Summary</h4>
+        <div class="row mb-2">
+            <div class="col-md-3"><strong>Total Strokes:</strong> {{ total_strokes }}</div>
+            <div class="col-md-3"><strong>Total Putts:</strong> {{ total_putts }}</div>
+            <div class="col-md-3"><strong>Avg. Strokes:</strong> {{ average_strokes }}</div>
+            <div class="col-md-3"><strong>Avg. Putts:</strong> {{ average_putts }}</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-3"><strong>GIR %:</strong> {{ gir_percentage }}%</div>
+            <div class="col-md-3"><strong>Fairways Hit %:</strong> {{ fairways_percentage }}%</div>
+            <div class="col-md-3"><strong>Up & Down %:</strong> {{ up_and_down_percentage }}%</div>
+            <div class="col-md-3"><strong>Holes Played:</strong> {{ holes_played }}</div>
+        </div>
+        <ul>
+            {% for score in scores %}
+                <li>Hole {{ score.hole_number }}: {{ score.strokes }} strokes (Putts: {{ score.putts }}, GIR: {{ score.green_in_regulation|yesno:"Yes,No" }}, Fairway Hit: {{ score.fairways_hit|yesno:"Yes,No" }}, Up & Down: {{ score.up_and_down|yesno:"Yes,No" }})</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
